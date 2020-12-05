@@ -6,10 +6,10 @@ workflows:
         name: iOS App with Flutter Module
         environment:
             vars:
-                FLUTTER_MODULE_DIR: "{{ C:\Users\Azam\Desktop\Current\Flutter\ProductionApp\production_app }}"
-                HOST_IOS_APP_DIR: "{{ C:\Users\Azam\Desktop\Current\Flutter\ProductionApp\production_app }}"
-                XCODE_PROJECT: "{{ ProductionApp }}"
-                XCODE_SCHEME: "{{ ProductionApp }}"
+                FLUTTER_MODULE_DIR: "C:\Users\Azam\Desktop\Current\Flutter\ProductionApp\production_app"
+                HOST_IOS_APP_DIR: "C:\Users\Azam\Desktop\Current\Flutter\ProductionApp\production_app"
+                XCODE_PROJECT: "ProductionApp"
+                XCODE_SCHEME: "ProductionApp"
             xcode: edge
             cocoapods: default
             flutter: stable
