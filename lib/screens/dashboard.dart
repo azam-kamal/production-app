@@ -11,8 +11,14 @@ import '../providers/glueClass.dart';
 import '../providers/finishClass.dart';
 import '../providers/dieClass.dart';
 import 'package:provider/provider.dart';
+import '../providers/planLastAct.dart';
+import '../providers/printLastAct.dart';
+import '../providers/glueLastAct.dart';
+import '../providers/dieLastAct.dart';
+import '../providers/finishLastAct.dart';
 
 class Dashboard extends StatefulWidget {
+  static const routeName = '/dash';
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -31,18 +37,29 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
-  var planData;
-
-  void lastActPlan() async {
-    planData = await Provider.of<Plans>(context, listen: false).lastActivity();
-  }
-
   var _isInit = true;
-  var actData;
+  String lastActPlanId = 'loading...';
+  String lastActPlanStart = 'loading...';
+  String lastActPlanEnd = 'loading...';
+
+  String lastActPrintId = 'loading...';
+  String lastActPrintStart = 'loading...';
+  String lastActPrintEnd = 'loading...';
+
+  String lastActGlueId = 'loading...';
+  String lastActGlueStart = 'loading...';
+  String lastActGlueEnd = 'loading...';
+
+  String lastActDieId = 'loading...';
+  String lastActDieStart = 'loading...';
+  String lastActDieEnd = 'loading...';
+
+  String lastActFinishId = 'loading...';
+  String lastActFinishStart = 'loading...';
+  String lastActFinishEnd = 'loading...';
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      lastActPlan();
       Provider.of<Plans>(context, listen: false).fetchItems();
       Provider.of<Prints>(
         context,
@@ -54,12 +71,49 @@ class _DashboardState extends State<Dashboard> {
         listen: false,
       ).fetchItems();
       Provider.of<Finishs>(context, listen: false).fetchItems();
-      actData=Provider.of<Plans>(context).lastActivity().asStream();
+      Provider.of<LastActFunc>(context, listen: false).fetchItems();
+      lastActCount =
+          Provider.of<LastActFunc>(context, listen: false).actItems.length;
+      var lst1 = Provider.of<LastActFunc>(context);
+      Provider.of<LastActFunc>(context).fetchItems().then((_) {
+        lastActPlanId = lst1.actItems[lst1.actItems.length - 1].jobId;
+        lastActPlanStart = lst1.actItems[lst1.actItems.length - 1].startDateTime;
+        lastActPlanEnd = lst1.actItems[lst1.actItems.length - 1].endDateTime;
+      });
+
+      var lst2 = Provider.of<LastActFunc2>(context);
+      Provider.of<LastActFunc2>(context).fetchItems().then((_) {
+        lastActPrintId = lst2.actItems[lst2.actItems.length - 1].jobId;
+        lastActPrintStart = lst2.actItems[lst2.actItems.length - 1].startDateTime;
+        lastActPrintEnd = lst2.actItems[lst2.actItems.length - 1].endDateTime;
+      });
+
+      var lst3 = Provider.of<LastActFunc3>(context);
+      Provider.of<LastActFunc3>(context).fetchItems().then((_) {
+        lastActDieId = lst3.actItems[lst3.actItems.length - 1].jobId;
+        lastActDieStart = lst3.actItems[lst3.actItems.length - 1].startDateTime;
+        lastActDieEnd = lst3.actItems[lst3.actItems.length - 1].endDateTime;
+      });
+
+      var lst4 = Provider.of<LastActFunc4>(context);
+      Provider.of<LastActFunc4>(context).fetchItems().then((_) {
+        lastActGlueId = lst4.actItems[lst4.actItems.length - 1].jobId;
+        lastActGlueStart = lst4.actItems[lst4.actItems.length - 1].startDateTime;
+        lastActGlueEnd = lst4.actItems[lst4.actItems.length - 1].endDateTime;
+      });
+
+      var lst5 = Provider.of<LastActFunc5>(context);
+      Provider.of<LastActFunc5>(context).fetchItems().then((_) {
+        lastActPlanId = lst5.actItems[lst5.actItems.length - 1].jobId;
+        lastActFinishStart = lst5.actItems[lst5.actItems.length - 1].startDateTime;
+        lastActFinishEnd = lst5.actItems[lst5.actItems.length - 1].endDateTime;
+      });
     }
     _isInit = false;
     super.didChangeDependencies();
   }
 
+  int lastActCount;
   @override
   Widget build(BuildContext context) {
     planCount = Provider.of<Plans>(context, listen: false).items.length;
@@ -68,7 +122,6 @@ class _DashboardState extends State<Dashboard> {
     glueCount = Provider.of<Glues>(context, listen: false).items.length;
     finishCount = Provider.of<Finishs>(context, listen: false).items.length;
     totalCount = planCount + printCount + dieCount + glueCount + finishCount;
-    
     return Scaffold(
       body: Container(
         color: Colors.black87,
@@ -123,7 +176,7 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   InkWell(
                     onTap: () =>
@@ -162,7 +215,9 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                                 Text(
                                   'Plan(s)',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                                 SizedBox(
                                   width: 20,
@@ -170,10 +225,48 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                                //Text(actData),
-                                //Text(lastPlanid)
+                                Column(
+                                  children: <Widget>[
+                                    Row(children: [
+                                      CircleAvatar(
+                                        radius: 8,
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Text(
+                                        'Last Activity',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Job: ' + lastActPlanId),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text(
+                                        'From: ' + lastActPlanStart,
+                                        style: TextStyle(fontSize: 12),
+                                      )
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Till: ' + lastActPlanEnd,
+                                          style: TextStyle(fontSize: 12)),
+                                    ]),
+                                  ],
+                                )
                               ],
                             )
                           ],
@@ -219,7 +312,9 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                                 Text(
                                   'Print(s)',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
                                 ),
                                 SizedBox(
                                   width: 20,
@@ -227,7 +322,49 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                             Row(
-                              children: <Widget>[Text('Last Activity:')],
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Row(children: [
+                                      CircleAvatar(
+                                        radius: 8,
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Text(
+                                        'Last Activity',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Job: ' + lastActPrintId),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text(
+                                        'From: ' + lastActPrintStart,
+                                        style: TextStyle(fontSize: 12),
+                                      )
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Till: ' + lastActPrintEnd,
+                                          style: TextStyle(fontSize: 12)),
+                                    ]),
+                                  ],
+                                )
+                              ],
                             )
                           ],
                         ),
@@ -280,7 +417,7 @@ class _DashboardState extends State<Dashboard> {
                                   'Die-Cutting',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 12),
+                                      fontSize: 12.5),
                                 ),
                                 SizedBox(
                                   width: 20,
@@ -288,7 +425,49 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                             Row(
-                              children: <Widget>[Text('Last Activity:')],
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Row(children: [
+                                      CircleAvatar(
+                                        radius: 8,
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Text(
+                                        'Last Activity',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Job: ' + lastActDieId),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text(
+                                        'From: ' + lastActDieStart,
+                                        style: TextStyle(fontSize: 12),
+                                      )
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Till: ' + lastActDieEnd,
+                                          style: TextStyle(fontSize: 12)),
+                                    ]),
+                                  ],
+                                )
+                              ],
                             )
                           ],
                         ),
@@ -332,7 +511,9 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                                 Text(
                                   'Glues',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
                                 ),
                                 SizedBox(
                                   width: 20,
@@ -340,7 +521,49 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                             Row(
-                              children: <Widget>[Text('Last Activity:')],
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Row(children: [
+                                      CircleAvatar(
+                                        radius: 8,
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Text(
+                                        'Last Activity',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Job: ' + lastActGlueId),
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text(
+                                        'From: ' + lastActGlueStart,
+                                        style: TextStyle(fontSize: 12),
+                                      )
+                                    ]),
+                                    Row(children: [
+                                      // CircleAvatar(
+                                      //   radius: 8,
+                                      //   backgroundColor: Colors.green,
+                                      // ),
+                                      Text('Till: ' + lastActGlueEnd,
+                                          style: TextStyle(fontSize: 12)),
+                                    ]),
+                                  ],
+                                )
+                              ],
                             )
                           ],
                         ),
@@ -350,69 +573,115 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
               Divider(),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: <
-                  Widget>[
-                InkWell(
-                  onTap: () =>
-                      Navigator.of(context).pushNamed(FinishPage.routeName),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(50),
-                        topLeft: Radius.circular(400),
-                        bottomLeft: Radius.circular(10),
-                      ),
-                      child: Card(
-                        child: Column(
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15)),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
-                                    color: Colors.white54,
-                                  ),
-                                  height: 100,
-                                  width: 100,
-                                  child:
-                                      Image.asset('assets/images/finish.png')),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(FinishPage.routeName),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(50),
+                            topLeft: Radius.circular(160),
+                            bottomLeft: Radius.circular(10),
+                          ),
+                          child: Card(
+                            child: Column(
                               children: <Widget>[
-                                Chip(
-                                  avatar: CircleAvatar(
-                                    backgroundColor:
-                                        Theme.of(context).errorColor,
-                                    child: Text(Provider.of<Finishs>(context)
-                                        .items
-                                        .length
-                                        .toString()),
-                                  ),
-                                  label: Text('Active'),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15)),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.white),
+                                        color: Colors.white54,
+                                      ),
+                                      height: 100,
+                                      width: 100,
+                                      child: Image.asset(
+                                          'assets/images/finish.png')),
                                 ),
-                                Text(
-                                  'Finishing(s)',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Chip(
+                                      avatar: CircleAvatar(
+                                        backgroundColor:
+                                            Theme.of(context).errorColor,
+                                        child: Text(
+                                            Provider.of<Finishs>(context)
+                                                .items
+                                                .length
+                                                .toString()),
+                                      ),
+                                      label: Text('Active'),
+                                    ),
+                                    Text(
+                                      'Finishing(s)',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 20,
-                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Column(
+                                      children: <Widget>[
+                                        Row(children: [
+                                          CircleAvatar(
+                                            radius: 8,
+                                            backgroundColor: Colors.blue,
+                                          ),
+                                          Text(
+                                            'Last Activity',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20),
+                                          ),
+                                        ]),
+                                        Row(children: [
+                                          // CircleAvatar(
+                                          //   radius: 8,
+                                          //   backgroundColor: Colors.green,
+                                          // ),
+                                          Text('Job: ' + lastActFinishId),
+                                        ]),
+                                        Row(children: [
+                                          // CircleAvatar(
+                                          //   radius: 8,
+                                          //   backgroundColor: Colors.green,
+                                          // ),
+                                          Text(
+                                            'From: ' + lastActFinishStart,
+                                            style: TextStyle(fontSize: 12),
+                                          )
+                                        ]),
+                                        Row(children: [
+                                          // CircleAvatar(
+                                          //   radius: 8,
+                                          //   backgroundColor: Colors.green,
+                                          // ),
+                                          Text('Till: ' + lastActFinishEnd,
+                                              style: TextStyle(fontSize: 12)),
+                                        ]),
+                                      ],
+                                    )
+                                  ],
+                                )
                               ],
                             ),
-                            Row(
-                              children: <Widget>[Text('Last Activity:')],
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ])
+                  ])
             ],
           ),
         ),

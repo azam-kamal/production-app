@@ -19,18 +19,8 @@ class PlanItem with ChangeNotifier {
       @required this.endDateTime});
 }
 
-class JobId {
-  final ids;
-  JobId(this.ids);
-}
-
 class Plans with ChangeNotifier {
   List<PlanItem> _items = [];
-
-  List<JobId> _jobItems = [];
-  List<JobId> get jobItems {
-    return [..._jobItems];
-  }
 
   List<PlanItem> get items {
     return [..._items];
@@ -81,7 +71,7 @@ class Plans with ChangeNotifier {
           endDateTime: planData['endDateTime'],
         ));
       });
-      print(json.decode(response.body));
+      // print(json.decode(response.body));
       _items = loadedPlan;
       notifyListeners();
     } catch (error) {
@@ -111,7 +101,6 @@ class Plans with ChangeNotifier {
     notifyListeners();
   }
 
-  
   Future<List> getJobId() async {
     const url = 'https://productionapp-73d41.firebaseio.com/planning.json';
     try {
@@ -127,19 +116,4 @@ class Plans with ChangeNotifier {
     }
   }
 
-
-  Future<List> lastActivity() async {
-    const url = 'https://productionapp-73d41.firebaseio.com/planning.json';
-    try {
-      final response = await http.get(url);
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      final loadedData = [];
-      final count = extractedData.length;
-      final lastItem = extractedData[count];
-      loadedData.add(lastItem['jobId']);
-      return loadedData;
-    } catch (error) {
-      throw error;
-    }
-  }
 }

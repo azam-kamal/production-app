@@ -18,6 +18,11 @@ import './screens/addGlue.dart';
 import './screens/addDie.dart';
 import './screens/addFinish.dart';
 import 'package:flutter/services.dart';
+import './providers/planLastAct.dart';
+import './providers/printLastAct.dart';
+import './providers/glueLastAct.dart';
+import './providers/dieLastAct.dart';
+import './providers/finishLastAct.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +56,26 @@ class MyApp extends StatelessWidget {
             // create:(ctx) => Products(),
             value: Finishs(),
           ),
+          ChangeNotifierProvider.value(
+            // create:(ctx) => Products(),
+            value: LastActFunc(),
+          ),
+          ChangeNotifierProvider.value(
+            // create:(ctx) => Products(),
+            value: LastActFunc2(),
+          ),
+          ChangeNotifierProvider.value(
+            // create:(ctx) => Products(),
+            value: LastActFunc3(),
+          ),
+          ChangeNotifierProvider.value(
+            // create:(ctx) => Products(),
+            value: LastActFunc4(),
+          ),
+          ChangeNotifierProvider.value(
+            // create:(ctx) => Products(),
+            value: LastActFunc5(),
+          ),
         ],
         child: MaterialApp(
           theme: ThemeData(
@@ -58,6 +83,7 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.black),
           home: Dashboard(),
           routes: {
+            Dashboard.routeName: (ctx) => Dashboard(),
             PlanPage.routeName: (ctx) => PlanPage(),
             PrintPage.routeName: (ctx) => PrintPage(),
             GluePage.routeName: (ctx) => GluePage(),

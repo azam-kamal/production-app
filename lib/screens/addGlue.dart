@@ -68,7 +68,7 @@ class _AddGlueState extends State<AddGlue> {
   var jobIds = [];
 
   void itemss() async {
-    // jobIdDropDown = await Provider.of<Plans>(context, listen: false).getJobId();
+    jobIdDropDown = await Provider.of<Plans>(context, listen: false).getJobId();
     for (int i = 0; i < jobIdDropDown.length; i++) {
       jobIds.add({'display': jobIdDropDown[i], 'value': jobIdDropDown[i]});
     }

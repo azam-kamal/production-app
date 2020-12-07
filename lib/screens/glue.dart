@@ -4,6 +4,7 @@ import 'package:production_app/screens/addGlue.dart';
 import 'package:provider/provider.dart';
 import '../providers/glueClass.dart';
 import '../widgets/glue_widget.dart';
+import 'dashboard.dart';
 
 
 class GluePage extends StatelessWidget {
@@ -14,9 +15,16 @@ class GluePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final glueData=Provider.of<Glues>(context);
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Glueing'),
+        return WillPopScope(
+          onWillPop: ()=>Navigator.pushReplacementNamed(context, Dashboard.routeName),
+          child: Scaffold(
+          appBar: AppBar(
+            title: Text('Glue'),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, Dashboard.routeName);
+                }),
           actions: <Widget>[
             Row(
               children: [
@@ -53,6 +61,6 @@ class GluePage extends StatelessWidget {
             ),
           ),
         ),
-        ));
+        )));
   }
 }
