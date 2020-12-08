@@ -16,9 +16,11 @@ class PrintPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final printData = Provider.of<Prints>(context);
     return WillPopScope(
-        onWillPop: () =>
-            Navigator.pushReplacementNamed(context, Dashboard.routeName),
-        child: Scaffold(
+        onWillPop:(){
+              Navigator.pushReplacementNamed(context,Dashboard.routeName);
+                return Future.value(true);
+                },
+                child: Scaffold(
             appBar: AppBar(
               title: Text('Print'),
               leading: IconButton(

@@ -16,9 +16,11 @@ class DiePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dieData = Provider.of<Diess>(context);
     return WillPopScope(
-        onWillPop: () =>
-            Navigator.pushReplacementNamed(context, Dashboard.routeName),
-        child: Scaffold(
+       onWillPop:(){
+              Navigator.pushReplacementNamed(context,Dashboard.routeName);
+                return Future.value(true);
+                },
+                 child: Scaffold(
             appBar: AppBar(
               title: Text('Dieing'),
               leading: IconButton(

@@ -16,9 +16,11 @@ class FinishPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final finishData = Provider.of<Finishs>(context);
     return WillPopScope(
-        onWillPop: () =>
-            Navigator.pushReplacementNamed(context, Dashboard.routeName),
-        child: Scaffold(
+        onWillPop:(){
+              Navigator.pushReplacementNamed(context,Dashboard.routeName);
+                return Future.value(true);
+                },
+                child: Scaffold(
             appBar: AppBar(
               title: Text('Finish'),
               leading: IconButton(

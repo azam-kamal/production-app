@@ -16,7 +16,10 @@ class PlanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final planData = Provider.of<Plans>(context);
     return WillPopScope(
-          onWillPop: ()=>Navigator.pushReplacementNamed(context, Dashboard.routeName),
+          onWillPop:(){
+              Navigator.pushReplacementNamed(context,Dashboard.routeName);
+                return Future.value(true);
+                },
           child: Scaffold(
           appBar: AppBar(
             title: Text('Plan'),
