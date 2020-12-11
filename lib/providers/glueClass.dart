@@ -90,11 +90,11 @@ class Glues with ChangeNotifier {
             reworkQuantity: glueData['reworkQuantity'],
             comments: glueData['comments']));
       });
-      print(json.decode(response.body));
+     // print(json.decode(response.body));
       _items = loadedglue;
       notifyListeners();
     } catch (error) {
-      throw error;
+      //throw error;
     }
   }
 

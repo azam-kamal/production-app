@@ -90,11 +90,11 @@ class Prints with ChangeNotifier {
             reworkQuantity: printData['reworkQuantity'],
             comments: printData['comments']));
       });
-      print(json.decode(response.body));
+     // print(json.decode(response.body));
       _items = loadedprint;
       notifyListeners();
     } catch (error) {
-      throw error;
+      //throw error;
     }
   }
 

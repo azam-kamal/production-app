@@ -307,7 +307,7 @@ class _AddFinishState extends State<AddFinish> {
 
                     _editedFinish = FinishItem(
                         id: _editedFinish.id,
-                        jobId: _editedFinish.jobId,
+                        jobId: value,
                         machine: _editedFinish.machine,
                         quantity: _editedFinish.quantity,
                         startDateTime: _editedFinish.startDateTime,
@@ -322,8 +322,8 @@ class _AddFinishState extends State<AddFinish> {
                     });
                     _editedFinish = FinishItem(
                         id: _editedFinish.id,
-                        jobId: _editedFinish.jobId,
-                        machine: value,
+                        jobId: value,
+                        machine: _editedFinish.machine,
                         quantity: _editedFinish.quantity,
                         startDateTime: _editedFinish.startDateTime,
                         endDateTime: _editedFinish.endDateTime,

@@ -90,11 +90,11 @@ class Finishs with ChangeNotifier {
             reworkQuantity: finishData['reworkQuantity'],
             comments: finishData['comments']));
       });
-      print(json.decode(response.body));
+     // print(json.decode(response.body));
       _items = loadedfinish;
       notifyListeners();
     } catch (error) {
-      throw error;
+      //throw error;
     }
   }
 

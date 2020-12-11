@@ -41,7 +41,7 @@ class LastActFunc4 with ChangeNotifier {
       _actItems = loadedPlan;
       notifyListeners();
     } catch (error) {
-      throw error;
+      //throw error;
     }
   }
 }

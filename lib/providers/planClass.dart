@@ -115,5 +115,4 @@ class Plans with ChangeNotifier {
       throw error;
     }
   }
-
 }

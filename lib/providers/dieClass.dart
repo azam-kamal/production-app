@@ -90,11 +90,11 @@ class Diess with ChangeNotifier {
             reworkQuantity: dieData['reworkQuantity'],
             comments: dieData['comments']));
       });
-      print(json.decode(response.body));
+      //print(json.decode(response.body));
       _items = loadeddie;
       notifyListeners();
     } catch (error) {
-      throw error;
+      //throw error;
     }
   }
 

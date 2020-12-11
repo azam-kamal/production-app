@@ -57,57 +57,72 @@ class _DashboardState extends State<Dashboard> {
   String lastActFinishId = 'loading...';
   String lastActFinishStart = 'loading...';
   String lastActFinishEnd = 'loading...';
+
+  Future<void> actPlan() async {
+    var lst1 = Provider.of<LastActFunc>(context);
+    await Provider.of<LastActFunc>(context).fetchItems().then((_) async {
+      print(lst1.actItems[lst1.actItems.length - 1].jobId.toString());
+      lastActPlanId = lst1.actItems[lst1.actItems.length - 1].jobId;
+      lastActPlanStart = lst1.actItems[lst1.actItems.length - 1].startDateTime;
+      lastActPlanEnd = lst1.actItems[lst1.actItems.length - 1].endDateTime;
+    });
+  }
+
+  Future<void> actPrint() async {
+    var lst2 = Provider.of<LastActFunc2>(context);
+    await Provider.of<LastActFunc2>(context).fetchItems().then((_) {
+      lastActPrintId = lst2.actItems[lst2.actItems.length - 1].jobId;
+      lastActPrintStart = lst2.actItems[lst2.actItems.length - 1].startDateTime;
+      lastActPrintEnd = lst2.actItems[lst2.actItems.length - 1].endDateTime;
+    });
+  }
+
+  Future<void> actDie() async {
+    var lst3 = Provider.of<LastActFunc3>(context);
+    await Provider.of<LastActFunc3>(context).fetchItems().then((_) {
+      lastActDieId = lst3.actItems[lst3.actItems.length - 1].jobId;
+      lastActDieStart = lst3.actItems[lst3.actItems.length - 1].startDateTime;
+      lastActDieEnd = lst3.actItems[lst3.actItems.length - 1].endDateTime;
+    });
+  }
+
+  Future<void> actGlue() async {
+    var lst4 = Provider.of<LastActFunc4>(context);
+    await Provider.of<LastActFunc4>(context).fetchItems().then((_) {
+      lastActGlueId = lst4.actItems[lst4.actItems.length - 1].jobId;
+      lastActGlueStart = lst4.actItems[lst4.actItems.length - 1].startDateTime;
+      lastActGlueEnd = lst4.actItems[lst4.actItems.length - 1].endDateTime;
+    });
+  }
+
+  Future<void> actFinish() async {
+    var lst5 = Provider.of<LastActFunc5>(context);
+    await Provider.of<LastActFunc5>(context).fetchItems().then((_) {
+      lastActFinishId = lst5.actItems[lst5.actItems.length - 1].jobId;
+      lastActFinishStart = lst5.actItems[lst5.actItems.length - 1].startDateTime;
+      lastActFinishEnd = lst5.actItems[lst5.actItems.length - 1].endDateTime;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<Plans>(context, listen: false).fetchItems();
-      Provider.of<Prints>(
-        context,
-        listen: false,
-      ).fetchItems();
-      Provider.of<Diess>(context, listen: false).fetchItems();
-      Provider.of<Glues>(
-        context,
-        listen: false,
-      ).fetchItems();
-      Provider.of<Finishs>(context, listen: false).fetchItems();
-      Provider.of<LastActFunc>(context, listen: false).fetchItems();
-      lastActCount =
-          Provider.of<LastActFunc>(context, listen: false).actItems.length;
-      var lst1 = Provider.of<LastActFunc>(context);
-      Provider.of<LastActFunc>(context).fetchItems().then((_) {
-        lastActPlanId = lst1.actItems[lst1.actItems.length - 1].jobId;
-        lastActPlanStart = lst1.actItems[lst1.actItems.length - 1].startDateTime;
-        lastActPlanEnd = lst1.actItems[lst1.actItems.length - 1].endDateTime;
-      });
-
-      var lst2 = Provider.of<LastActFunc2>(context);
-      Provider.of<LastActFunc2>(context).fetchItems().then((_) {
-        lastActPrintId = lst2.actItems[lst2.actItems.length - 1].jobId;
-        lastActPrintStart = lst2.actItems[lst2.actItems.length - 1].startDateTime;
-        lastActPrintEnd = lst2.actItems[lst2.actItems.length - 1].endDateTime;
-      });
-
-      var lst3 = Provider.of<LastActFunc3>(context);
-      Provider.of<LastActFunc3>(context).fetchItems().then((_) {
-        lastActDieId = lst3.actItems[lst3.actItems.length - 1].jobId;
-        lastActDieStart = lst3.actItems[lst3.actItems.length - 1].startDateTime;
-        lastActDieEnd = lst3.actItems[lst3.actItems.length - 1].endDateTime;
-      });
-
-      var lst4 = Provider.of<LastActFunc4>(context);
-      Provider.of<LastActFunc4>(context).fetchItems().then((_) {
-        lastActGlueId = lst4.actItems[lst4.actItems.length - 1].jobId;
-        lastActGlueStart = lst4.actItems[lst4.actItems.length - 1].startDateTime;
-        lastActGlueEnd = lst4.actItems[lst4.actItems.length - 1].endDateTime;
-      });
-
-      var lst5 = Provider.of<LastActFunc5>(context);
-      Provider.of<LastActFunc5>(context).fetchItems().then((_) {
-        lastActPlanId = lst5.actItems[lst5.actItems.length - 1].jobId;
-        lastActFinishStart = lst5.actItems[lst5.actItems.length - 1].startDateTime;
-        lastActFinishEnd = lst5.actItems[lst5.actItems.length - 1].endDateTime;
-      });
+      
+      Provider.of<Plans>(context, listen: false).fetchItems().then((_) => null);
+      Provider.of<Prints>(context,listen: false,).fetchItems().then((_) => null);
+      Provider.of<Diess>(context, listen: false).fetchItems().then((_) => null);
+      Provider.of<Glues>(context,listen: false,).fetchItems().then((_) => null);
+      Provider.of<Finishs>(context, listen: false).fetchItems().then((_) => null);
+      Provider.of<LastActFunc>(context, listen: false).fetchItems().then((_) => null);
+      Provider.of<LastActFunc2>(context, listen: false).fetchItems().then((_) => null );
+      Provider.of<LastActFunc3>(context, listen: false).fetchItems().then((_) => null );
+      Provider.of<LastActFunc4>(context, listen: false).fetchItems().then((_) => null);
+      Provider.of<LastActFunc5>(context, listen: false).fetchItems().then((_) => null);
+      actPlan();
+      actPrint();
+      actDie();
+      actGlue();
+      actFinish();
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -116,16 +131,15 @@ class _DashboardState extends State<Dashboard> {
   int lastActCount;
   @override
   Widget build(BuildContext context) {
-    planCount = Provider.of<Plans>(context, listen: false).items.length;
-    printCount = Provider.of<Prints>(context, listen: false).items.length;
-    dieCount = Provider.of<Diess>(context, listen: false).items.length;
-    glueCount = Provider.of<Glues>(context, listen: false).items.length;
-    finishCount = Provider.of<Finishs>(context, listen: false).items.length;
+    planCount = Provider.of<LastActFunc>(context, listen: false).actItems.length;
+    printCount = Provider.of<LastActFunc2>(context, listen: false).actItems.length;
+    dieCount = Provider.of<LastActFunc3>(context, listen: false).actItems.length;
+    glueCount = Provider.of<LastActFunc4>(context, listen: false).actItems.length;
+    finishCount = Provider.of<LastActFunc5>(context, listen: false).actItems.length;
     totalCount = planCount + printCount + dieCount + glueCount + finishCount;
     return Scaffold(
       body: Container(
         color: Colors.black87,
-        // padding: EdgeInsets.all(4),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -176,10 +190,8 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
               Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   InkWell(
-                    
                     onTap: () =>
                         Navigator.of(context).pushNamed(PlanPage.routeName),
                     child: Container(

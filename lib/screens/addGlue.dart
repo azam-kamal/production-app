@@ -310,7 +310,7 @@ class _AddGlueState extends State<AddGlue> {
 
                     _editedGlue = GlueItem(
                         id: _editedGlue.id,
-                        jobId: _editedGlue.jobId,
+                        jobId: value,
                         machine: _editedGlue.machine,
                         quantity: _editedGlue.quantity,
                         startDateTime: _editedGlue.startDateTime,
@@ -325,8 +325,8 @@ class _AddGlueState extends State<AddGlue> {
                     });
                     _editedGlue = GlueItem(
                         id: _editedGlue.id,
-                        jobId: _editedGlue.jobId,
-                        machine: value,
+                        jobId: value,
+                        machine: _editedGlue.machine,
                         quantity: _editedGlue.quantity,
                         startDateTime: _editedGlue.startDateTime,
                         endDateTime: _editedGlue.endDateTime,
