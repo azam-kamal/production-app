@@ -309,7 +309,7 @@ class _AddDieState extends State<AddDie> {
 
                     _editedDie = DieItem(
                         id: _editedDie.id,
-                        jobId: _editedDie.jobId,
+                        jobId: value,
                         machine: _editedDie.machine,
                         quantity: _editedDie.quantity,
                         startDateTime: _editedDie.startDateTime,
@@ -324,8 +324,8 @@ class _AddDieState extends State<AddDie> {
                     });
                     _editedDie = DieItem(
                         id: _editedDie.id,
-                        jobId: _editedDie.jobId,
-                        machine: value,
+                        jobId: value,
+                        machine: _editedDie.machine,
                         quantity: _editedDie.quantity,
                         startDateTime: _editedDie.startDateTime,
                         endDateTime: _editedDie.endDateTime,

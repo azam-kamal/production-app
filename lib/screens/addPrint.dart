@@ -314,7 +314,7 @@ class _AddPrintState extends State<AddPrint> {
 
                           _editedPrint = PrintItem(
                               id: _editedPrint.id,
-                              jobId: _editedPrint.jobId,
+                              jobId: value,
                               machine: _editedPrint.machine,
                               quantity: _editedPrint.quantity,
                               startDateTime: _editedPrint.startDateTime,
@@ -329,8 +329,8 @@ class _AddPrintState extends State<AddPrint> {
                           });
                           _editedPrint = PrintItem(
                               id: _editedPrint.id,
-                              jobId: _editedPrint.jobId,
-                              machine: value,
+                              jobId: value,
+                              machine: _editedPrint.machine,
                               quantity: _editedPrint.quantity,
                               startDateTime: _editedPrint.startDateTime,
                               endDateTime: _editedPrint.endDateTime,
